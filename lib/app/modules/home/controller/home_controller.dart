@@ -7,6 +7,7 @@ class HomeController extends GetxController {
   final tasks = <Task>[].obs;
   final formKey = GlobalKey<FormState>();
   final editController = TextEditingController();
+  final chipIndex = 0.obs;
 
   TaskRepository taskRepository;
   HomeController({required this.taskRepository});
@@ -21,5 +22,17 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  void changeChipIndex(int value) {
+    chipIndex.value = value;
+  }
+
+  bool addTask(Task task) {
+    if (tasks.contains(task)) {
+      return false;
+    }
+    tasks.add(task);
+    return true;
   }
 }
