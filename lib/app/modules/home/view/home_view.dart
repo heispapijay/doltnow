@@ -1,6 +1,8 @@
 import 'package:doltnow/app/core/utils/extensions.dart';
+import 'package:doltnow/app/data/models/task.dart';
 import 'package:doltnow/app/modules/home/controller/home_controller.dart';
 import 'package:doltnow/app/widgets/new_card.dart';
+import 'package:doltnow/app/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,11 +25,18 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
             ),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              children: [NewCard()],
+            Obx(
+              () => GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                children: [
+                  ...controller.tasks
+                      .map((element) => TaskCard(task: element))
+                      .toList(),
+                  NewCard(),
+                ],
+              ),
             )
           ],
         ),
