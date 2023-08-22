@@ -6,7 +6,7 @@ import 'package:doltnow/app/data/services/storage/services.dart';
 import 'package:get/get.dart';
 
 class TaskProvider {
-  StorageService _storage = Get.find<StorageService>();
+  final StorageService _storage = Get.find<StorageService>();
 
 // {
 //   'tasks': [
