@@ -1,9 +1,11 @@
 import 'package:doltnow/app/core/utils/extensions.dart';
+import 'package:doltnow/app/core/values/colors.dart';
 import 'package:doltnow/app/data/models/task.dart';
 import 'package:doltnow/app/modules/home/controller/home_controller.dart';
 import 'package:doltnow/app/widgets/new_card.dart';
 import 'package:doltnow/app/widgets/task_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -32,7 +34,18 @@ class HomeView extends GetView<HomeController> {
                 physics: const ClampingScrollPhysics(),
                 children: [
                   ...controller.tasks
-                      .map((element) => TaskCard(task: element))
+                      .map((element) => LongPressDraggable(
+                            data: element,
+                            onDragStarted: () => controller.deleteTask(true),
+                            onDraggableCanceled: (_, __) =>
+                                controller.deleteTask(false),
+                            onDragEnd: (_) => controller.deleteTask(false),
+                            child: TaskCard(task: element),
+                            feedback: Opacity(
+                              opacity: 0.8,
+                              child: TaskCard(task: element),
+                            ),
+                          ))
                       .toList(),
                   NewCard(),
                 ],
@@ -41,6 +54,18 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
+      floatingActionButton: DragTarget<Task>(builder: (_, __, ___) {
+        return Obx(
+          () => FloatingActionButton(
+            backgroundColor: controller.deleting.value ? Colors.red : green,
+            onPressed: () {},
+            child: Icon(controller.deleting.value ? Icons.delete : Icons.add),
+          ),
+        );
+      }, onAccept: (Task task) {
+        controller.removeTask(task);
+        EasyLoading.showSuccess('Task Deleted');
+      }),
     );
   }
 }
