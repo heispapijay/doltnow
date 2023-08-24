@@ -1,6 +1,8 @@
 import 'package:doltnow/app/data/services/storage/services.dart';
+import 'package:doltnow/app/modules/home/bindings/home_bindings.dart';
 import 'package:doltnow/app/modules/home/view/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -15,9 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'DoltNow',
-      home: HomeView(),
+      home: const HomeView(),
+      initialBinding: HomeBindings(),
+      builder: EasyLoading.init(),
     );
   }
 }
