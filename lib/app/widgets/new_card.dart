@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, deprecated_member_use
 
 import 'package:doltnow/app/core/utils/extensions.dart';
 import 'package:doltnow/app/core/values/colors.dart';

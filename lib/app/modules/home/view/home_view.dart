@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:doltnow/app/core/utils/extensions.dart';
 import 'package:doltnow/app/core/values/colors.dart';
 import 'package:doltnow/app/data/models/task.dart';
@@ -7,6 +9,8 @@ import 'package:doltnow/app/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+
+import '../../../widgets/add_details.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -58,7 +62,16 @@ class HomeView extends GetView<HomeController> {
         return Obx(
           () => FloatingActionButton(
             backgroundColor: controller.deleting.value ? Colors.red : green,
-            onPressed: () {},
+            onPressed: () {
+              if (controller.tasks.isNotEmpty) {
+                Get.to(
+                  () => AddDetails(),
+                  transition: Transition.rightToLeft,
+                );
+              } else {
+                EasyLoading.showInfo('Add a task first');
+              }
+            },
             child: Icon(controller.deleting.value ? Icons.delete : Icons.add),
           ),
         );
